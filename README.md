@@ -4,35 +4,13 @@ This project implements a complete, end-to-end data science pipeline to build a 
 
 ## Architecture Overview
 
-The system is composed of three main components that work in sequence: the **Intake Pipeline**, the **Vector Index Pipeline**, and the **Query App**.
+The system is composed of three main components that work in sequence. The output of each pipeline serves as the input for the next.
 
-```mermaid
-graph TD
-    subgraph "Intake Pipeline"
-        A["1. Scrape CTFtime.org"] --> B["2. Clean HTML with Trafilatura"];
-        B --> C["3. Enrich with AI Batch Jobs <br/>(Rewrite, Summarize, Keywords)"];
-        C --> D["4. Store in MongoDB"];
-    end
+1.  **The Intake Pipeline:** This is a fully automated system that finds, cleans, and enriches raw CTF write-ups. It scrapes data from the web, uses AI to rewrite it for clarity and generate summaries, and stores the final structured data in a MongoDB database.
 
-    subgraph "Vector Index Pipeline"
-        E["5. Prepare Data from MongoDB <br/>(Summaries & Detailed Chunks)"] --> F["6. Generate Embeddings <br/>(Vertex AI Batch Jobs)"];
-        F --> G["7. Populate Vector Indexes <br/>(Summary & Detailed)"];
-        G --> H["8. Deploy Index Endpoints"];
-        H --> I["9. Test Endpoints"];
-    end
+2.  **The Vector Index Pipeline:** This pipeline takes the structured data from MongoDB and prepares it for search. It generates vector embeddings for both high-level summaries and detailed text chunks, then populates a dual-index system in Google Cloud's Vertex AI Vector Search.
 
-    subgraph "Query App"
-        J["User Question"] --> K["Embed Question"];
-        K --> L["Vector Search for Similar Chunks"];
-        L --> M["Fetch Full Documents from MongoDB"];
-        M --> N["Generate Answer with Gemini"];
-        N --> O["Display Answer & Sources"];
-    end
-
-    D --> E;
-    I --> J;
-
-```
+3.  **The Query App:** This is the final, user-facing application. It takes a user's question, converts it to a vector, searches the appropriate index for the most relevant context, and then uses that context to generate a precise, evidence-backed answer from a large language model.
 
 ## Directory Structure
 
