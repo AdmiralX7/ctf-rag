@@ -1,0 +1,9 @@
+requests
+beautifulsoup4
+markdownify
+pymongo
+trafilatura
+google-cloud-aiplatform 
+google-generativeai
+python-dotenv
+tiktoken

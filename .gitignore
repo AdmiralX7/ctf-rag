@@ -1,0 +1,16 @@
+# Python virtual environment
+.venv/
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# macOS specific files
+.DS_Store
+
+# Environment variables file (sensitive credentials)
+.env
+
+# Project-specific generated directories
+Intake/runs/
+VectorIndex/output/ 
