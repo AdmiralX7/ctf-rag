@@ -9,24 +9,24 @@ The system is composed of three main components that work in sequence: the **Int
 ```mermaid
 graph TD
     subgraph "Intake Pipeline"
-        A[1. Scrape CTFtime.org] --> B[2. Clean HTML with Trafilatura];
-        B --> C[3. Enrich with AI Batch Jobs <br/>(Rewrite, Summarize, Keywords)];
-        C --> D[4. Store in MongoDB];
+        A["1. Scrape CTFtime.org"] --> B["2. Clean HTML with Trafilatura"];
+        B --> C["3. Enrich with AI Batch Jobs <br/>(Rewrite, Summarize, Keywords)"];
+        C --> D["4. Store in MongoDB"];
     end
 
     subgraph "Vector Index Pipeline"
-        E[5. Prepare Data from MongoDB <br/>(Summaries & Detailed Chunks)] --> F[6. Generate Embeddings <br/>(Vertex AI Batch Jobs)];
-        F --> G[7. Populate Vector Indexes <br/>(Summary & Detailed)];
-        G --> H[8. Deploy Index Endpoints];
-        H --> I[9. Test Endpoints];
+        E["5. Prepare Data from MongoDB <br/>(Summaries & Detailed Chunks)"] --> F["6. Generate Embeddings <br/>(Vertex AI Batch Jobs)"];
+        F --> G["7. Populate Vector Indexes <br/>(Summary & Detailed)"];
+        G --> H["8. Deploy Index Endpoints"];
+        H --> I["9. Test Endpoints"];
     end
 
     subgraph "Query App"
-        J[User Question] --> K[Embed Question];
-        K --> L[Vector Search for Similar Chunks];
-        L --> M[Fetch Full Documents from MongoDB];
-        M --> N[Generate Answer with Gemini];
-        N --> O[Display Answer & Sources];
+        J["User Question"] --> K["Embed Question"];
+        K --> L["Vector Search for Similar Chunks"];
+        L --> M["Fetch Full Documents from MongoDB"];
+        M --> N["Generate Answer with Gemini"];
+        N --> O["Display Answer & Sources"];
     end
 
     D --> E;
